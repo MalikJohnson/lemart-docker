@@ -1,0 +1,43 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:16
+    container_name: postgres-db
+    environment:
+      POSTGRES_DB: LeMart
+      POSTGRES_USER: malik
+      POSTGRES_PASSWORD: king
+    ports:
+      - "5433:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: lemart-backend
+    depends_on:
+      - db
+    ports:
+      - "8080:8080"
+    environment:
+      DB_URL: jdbc:postgresql://db:5432/LeMart
+      DB_USERNAME: malik
+      DB_PASSWORD: king
+      JWT_SECRET: w9Q7+3p4c7V8kE2zX5r6u8x/A?D(G+KbPeShVmYq3t6v9y$B&E)H@McQfTjWnZr4
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: lemart-frontend
+    ports:
+      - "4200:80"
+    depends_on:
+      - backend
+
+volumes:
+  pgdata:
+
