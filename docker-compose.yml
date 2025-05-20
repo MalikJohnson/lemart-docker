@@ -14,9 +14,7 @@ services:
       - pgdata:/var/lib/postgresql/data
 
   backend:
-    build:
-      context: ./backend
-      dockerfile: Dockerfile
+    image: malikjohnson/lemart-backend:latest
     container_name: lemart-backend
     depends_on:
       - db
@@ -29,9 +27,7 @@ services:
       JWT_SECRET: w9Q7+3p4c7V8kE2zX5r6u8x/A?D(G+KbPeShVmYq3t6v9y$B&E)H@McQfTjWnZr4
 
   frontend:
-    build:
-      context: ./frontend
-      dockerfile: Dockerfile
+    image: malikjohnson/lemart-frontend:latest
     container_name: lemart-frontend
     ports:
       - "4200:80"
